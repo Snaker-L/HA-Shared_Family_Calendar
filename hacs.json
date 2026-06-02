@@ -1,0 +1,6 @@
+{
+  "name": "Shared Calendar",
+  "content_in_root": false,
+  "domains": ["shared_calendar"],
+  "render_readme": true
+}
