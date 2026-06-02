@@ -1,0 +1,10 @@
+{
+  "domain": "shared_calendar",
+  "name": "Shared Calendar",
+  "version": "1.0.1",
+  "documentation": "https://github.com/Snaker-L/Home-Assistant_shared-calendar",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@Snaker-L"],
+  "iot_class": "local_polling"
+}
