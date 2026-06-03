@@ -10,12 +10,14 @@ Der Kalender ist lokal und verwendet eingebaute Termine in Home Assistant.
 
 ### Community-Karte
 
-Füge die Karte als HACS-Plugin oder als `custom` Ressource in Home Assistant hinzu.
+Wenn du das Repository via HACS installierst, wird die Karte automatisch aus dem `www`-Verzeichnis bereitgestellt.
 
-- URL: `/local/shared_calendar/shared-calendar-card.js`
+- HACS-Ressource: `/hacsfiles/shared-calendar/shared-calendar-card.js`
 - Typ: `module`
 
-Danach kannst du die Karte im Lovelace-Editor auswählen.
+Wenn du lokal installierst, kopiere die Datei aus `www/shared-calendar-card.js` in dein Home Assistant `www`-Verzeichnis und verwende dann `/local/shared-calendar-card.js` als Ressource.
+
+Danach kannst du die Karte direkt im Lovelace-Editor auswählen.
 
 ### Beispielkarte
 
