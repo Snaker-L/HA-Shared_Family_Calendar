@@ -78,6 +78,7 @@ max_events: 8
 
 ## Versionshistorie
 
+- **1.0.1** – Pfade auf `www/community` angepasst; Ressourcenregistrierung via HACS/local optimiert
 - **1.0.0** (Testversion) – Erste Release mit Basis-Funktionalität
 
 ## Support

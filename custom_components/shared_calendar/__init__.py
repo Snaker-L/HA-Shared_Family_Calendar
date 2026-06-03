@@ -128,6 +128,7 @@ async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
 
     for resource in resources_to_remove:
         resource_id = resource.get(CONF_ID)
+        resource_url = resource.get(CONF_URL)
         if not resource_id:
             continue
         try:
@@ -140,10 +141,15 @@ async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
 async def _get_resource_url(hass: HomeAssistant) -> str | None:
     """Return the correct resource URL for the Shared Calendar card.
 
-    Prefer the HACS-served resource under `/hacsfiles/...` so the card is
-    loaded from the installed HACS package rather than from `/local`.
+    For manual installations: use `/local/community/shared_calendar/shared-calendar-card.js`.
+    For HACS: use the HACS-served resource under `/hacsfiles/...`.
     """
-    # Prefer the HACS resource URL for registration.
+    # Check if local resource exists first (manual or fallback installation)
+    target_file = Path(hass.config.path("www", "community", "shared_calendar", "shared-calendar-card.js"))
+    if target_file.exists():
+        return MANUAL_RESOURCE_URL
+    
+    # Otherwise use HACS resource URL
     return HACS_RESOURCE_URL
 
 

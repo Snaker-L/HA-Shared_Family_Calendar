@@ -1,6 +1,6 @@
 /**
  * Shared Calendar Card - Home Assistant Lovelace Card
- * Version: 1.0.0
+ * Version: 1.0.1
  * A simple calendar card for displaying shared calendar events
  */
 
