@@ -1,0 +1,15 @@
+{
+  "title": "Shared Calendar",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure Shared Calendar",
+        "description": "Enter the public ICS calendar URL for your shared calendar.",
+        "data": {
+          "name": "Calendar name",
+          "ics_url": "ICS calendar URL"
+        }
+      }
+    }
+  }
+}
