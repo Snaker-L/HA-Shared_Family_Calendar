@@ -29,6 +29,9 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Shared Calendar from a config entry."""
     hass.data.setdefault(DOMAIN, {})
+    if entry.entry_id in hass.data[DOMAIN]:
+        _LOGGER.debug("Shared Calendar config entry %s is already set up", entry.entry_id)
+        return True
     hass.data[DOMAIN][entry.entry_id] = entry.data
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
@@ -49,15 +52,14 @@ async def _async_register_lovelace_resource(hass: HomeAssistant) -> bool:
     if not lovelace_data:
         _LOGGER.debug("Lovelace data is not available yet; skipping resource registration.")
         return False
-
-    if lovelace_data.get("mode") == "yaml":
+    mode = lovelace_data.get("mode") if isinstance(lovelace_data, dict) else getattr(lovelace_data, "mode", None)
+    if mode == "yaml":
         _LOGGER.warning(
             "Lovelace is running in YAML mode; automatic Shared Calendar resource "
             "registration is not supported."
         )
         return True
-
-    resource_collection = lovelace_data.get("resources")
+    resource_collection = lovelace_data.get("resources") if isinstance(lovelace_data, dict) else getattr(lovelace_data, "resources", None)
     if resource_collection is None:
         _LOGGER.debug("Lovelace resources collection is not available.")
         return False
@@ -94,10 +96,13 @@ async def _async_register_lovelace_resource(hass: HomeAssistant) -> bool:
 async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
     """Remove the Shared Calendar Lovelace resource when the integration is removed."""
     lovelace_data = hass.data.get("lovelace")
-    if not lovelace_data or lovelace_data.get("mode") == "yaml":
+    if not lovelace_data:
+        return
+    mode = lovelace_data.get("mode") if isinstance(lovelace_data, dict) else getattr(lovelace_data, "mode", None)
+    if mode == "yaml":
         return
 
-    resource_collection = lovelace_data.get("resources")
+    resource_collection = lovelace_data.get("resources") if isinstance(lovelace_data, dict) else getattr(lovelace_data, "resources", None)
     if resource_collection is None:
         return
 
