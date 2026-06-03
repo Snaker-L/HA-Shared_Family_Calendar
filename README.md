@@ -44,17 +44,9 @@ Starte Home Assistant neu.
 
 ### 2. Ressource hinzufügen
 
-- Gehe zu **Einstellungen → Dashboards → Ressourcen**
-- Klicke **+ Ressource erstellen**
-- Bei HACS-Installation:
-  ```
-  /hacsfiles/Snaker-L/Home-Assistant_shared-calendar/www/shared_calendar/shared-calendar-card.js
-  ```
-- Bei manueller Installation:
-  ```
-  /local/shared_calendar/shared-calendar-card.js
-  ```
-- Typ: `module`
+- Bei HACS-Installation wird die Lovelace-Ressource automatisch registriert.
+- Bei manueller Installation kopiere `www/shared_calendar` in dein Home Assistant-Ordner `www/shared_calendar` und starte Home Assistant neu.
+- Die Karte sollte danach automatisch im Kartenpicker verfügbar sein.
 
 ### 3. Karte zum Dashboard hinzufügen
 

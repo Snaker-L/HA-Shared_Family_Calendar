@@ -176,3 +176,11 @@ class SharedCalendarCard extends HTMLElement {
 }
 
 customElements.define('shared-calendar-card', SharedCalendarCard);
+
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: 'custom:shared-calendar-card',
+  name: 'Shared Calendar Card',
+  description: 'Zeigt einen gemeinsamen Kalender als Lovelace-Karte an.',
+  preview: true,
+});
