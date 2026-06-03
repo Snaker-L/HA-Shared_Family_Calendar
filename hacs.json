@@ -2,5 +2,7 @@
   "name": "Shared Calendar",
   "content_in_root": false,
   "domains": ["shared_calendar"],
-  "render_readme": true
+  "render_readme": true,
+  "categories": ["integration", "plugin"],
+  "zip_release": false
 }
