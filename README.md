@@ -46,7 +46,8 @@ Starte Home Assistant neu.
 - Bei HACS-Installation wird die Lovelace-Ressource automatisch registriert.
  - Bei HACS-Installation wird die Lovelace-Ressource automatisch registriert.
  - HACS speichert die Frontend-Dateien nicht unter `www/shared_calendar`, sondern unter `/hacsfiles/...`.
- - Bei manueller Installation kopiert die Integration die Karte automatisch nach `www/shared_calendar`, sobald sie eingerichtet wird.
+ - Bei manueller Installation kopiert die Integration die Karte automatisch nach `www/community/shared_calendar`, sobald sie eingerichtet wird.
+ - Die Ressource wird bevorzugt über den HACS-Pfad `/hacsfiles/.../www/community/shared_calendar/shared-calendar-card.js` registriert (nicht `/local`).
  - Eine zusätzliche manuelle Ressourcenkonfiguration ist nicht nötig.
 - Die Karte sollte danach automatisch im Kartenpicker verfügbar sein.
 - Beim Entfernen der Integration wird die automatisch erstellte Ressource wieder entfernt.
