@@ -1,12 +1,14 @@
 """The Shared Calendar integration."""
 
 import logging
-import os
+from pathlib import Path
+from shutil import copy2
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.components.lovelace.const import CONF_RESOURCE_TYPE_WS, CONF_URL
-from homeassistant.const import CONF_ID, EVENT_HOMEASSISTANT_STARTED, Platform
+from homeassistant.const import CONF_ID, Platform
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.event import async_call_later
 
 from .const import DOMAIN, PLATFORMS
 
@@ -16,7 +18,6 @@ HACS_RESOURCE_URL = (
     "/hacsfiles/Snaker-L/Home-Assistant_shared-calendar/www/shared_calendar/"
     "shared-calendar-card.js"
 )
-MANUAL_RESOURCE_PATH = "www/shared_calendar/shared-calendar-card.js"
 MANUAL_RESOURCE_URL = "/local/shared_calendar/shared-calendar-card.js"
 
 
@@ -33,10 +34,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     if not await _async_register_lovelace_resource(hass):
-        def _handle_start(event):
+        def _retry_registration(_: object) -> None:
+            _LOGGER.debug("Retrying Shared Calendar Lovelace resource registration.")
             hass.async_create_task(_async_register_lovelace_resource(hass))
 
-        hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STARTED, _handle_start)
+        async_call_later(hass, 10, _retry_registration)
 
     return True
 
@@ -60,7 +62,7 @@ async def _async_register_lovelace_resource(hass: HomeAssistant) -> bool:
         _LOGGER.debug("Lovelace resources collection is not available.")
         return False
 
-    resource_url = _get_resource_url(hass)
+    resource_url = await _get_resource_url(hass)
     if resource_url is None:
         _LOGGER.debug("Shared Calendar resource file not found; cannot register resource.")
         return True
@@ -99,7 +101,7 @@ async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
     if resource_collection is None:
         return
 
-    resource_url = _get_resource_url(hass)
+    resource_url = await _get_resource_url(hass)
     if resource_url is None:
         return
 
@@ -120,13 +122,35 @@ async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
             _LOGGER.error("Failed to remove Shared Calendar Lovelace resource: %s", err)
 
 
-def _get_resource_url(hass: HomeAssistant) -> str | None:
+async def _get_resource_url(hass: HomeAssistant) -> str | None:
     """Return the correct resource URL for the Shared Calendar card."""
-    config_path = hass.config.path("www", "shared_calendar", "shared-calendar-card.js")
-    if os.path.exists(config_path):
+    if await _ensure_local_resource(hass):
         return MANUAL_RESOURCE_URL
 
     return HACS_RESOURCE_URL
+
+
+async def _ensure_local_resource(hass: HomeAssistant) -> bool:
+    """Ensure the Shared Calendar card file exists under config/www/shared_calendar."""
+    target_dir = Path(hass.config.path("www", "shared_calendar"))
+    target_file = target_dir / "shared-calendar-card.js"
+
+    if target_file.exists():
+        return True
+
+    source_file = Path(__file__).resolve().parent / "www" / "shared-calendar-card.js"
+    if not source_file.exists():
+        _LOGGER.debug("Local Shared Calendar source file not found: %s", source_file)
+        return False
+
+    try:
+        target_dir.mkdir(parents=True, exist_ok=True)
+        copy2(source_file, target_file)
+        _LOGGER.info("Copied Shared Calendar card to %s", target_file)
+        return True
+    except OSError as err:
+        _LOGGER.error("Unable to copy Shared Calendar card to local www: %s", err)
+        return False
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
