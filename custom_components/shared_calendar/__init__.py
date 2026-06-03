@@ -15,6 +15,12 @@ from .const import DOMAIN, PLATFORMS
 _LOGGER = logging.getLogger(__name__)
 
 HACS_RESOURCE_URL = (
+    "/hacsfiles/Home-Assistant_shared-calendar/www/community/shared_calendar/"
+    "shared-calendar-card.js"
+)
+# Some HACS installations may include the owner in the path; include
+# a second variant for cleanup operations.
+HACS_RESOURCE_URL_OWNER = (
     "/hacsfiles/Snaker-L/Home-Assistant_shared-calendar/www/community/shared_calendar/"
     "shared-calendar-card.js"
 )
@@ -35,6 +41,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN][entry.entry_id] = entry.data
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+
+    # Ensure the local resource is present for manual installations
+    # (creates config/www/community/shared_calendar/shared-calendar-card.js).
+    try:
+        await _ensure_local_resource(hass)
+    except Exception:  # pragma: no cover - defensive
+        _LOGGER.debug("Unable to ensure local Shared Calendar resource during setup.")
 
     if not await _async_register_lovelace_resource(hass):
         def _retry_registration(_: object) -> None:
@@ -106,7 +119,7 @@ async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
     if resource_collection is None:
         return
 
-    resource_urls = [MANUAL_RESOURCE_URL, HACS_RESOURCE_URL]
+    resource_urls = [MANUAL_RESOURCE_URL, HACS_RESOURCE_URL, HACS_RESOURCE_URL_OWNER]
     resources_to_remove = [
         item
         for item in resource_collection.async_items()
