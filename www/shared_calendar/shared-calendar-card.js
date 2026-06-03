@@ -1,3 +1,9 @@
+/**
+ * Shared Calendar Card - Home Assistant Lovelace Card
+ * Version: 1.0.0
+ * A simple calendar card for displaying shared calendar events
+ */
+
 class SharedCalendarCard extends HTMLElement {
   constructor() {
     super();
@@ -10,7 +16,16 @@ class SharedCalendarCard extends HTMLElement {
   }
 
   static getConfigElement() {
-    return document.createElement('div');
+    return document.createElement('shared-calendar-card-editor');
+  }
+
+  static getStubConfig() {
+    return {
+      calendar_entity: 'calendar.family_calendar',
+      title: 'Shared Calendar',
+      days: 7,
+      max_events: 10,
+    };
   }
 
   setConfig(config) {

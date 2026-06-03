@@ -1,25 +1,67 @@
-# Home-Assistant_shared-calendar
+# Home-Assistant Shared Calendar
 
-**Das ist zurzeit noch ein Test und nicht funktionsfähig!**
+> ⚠️ **Dies ist zurzeit noch eine Testversion und nicht vollständig funktionsfähig!**
 
-Dies ist ein einfacher lokaler Home Assistant Kalender, der ohne externe ICS-URL arbeitet.
+Ein einfacher lokaler Kalender für Home Assistant als Custom Lovelace Card.
+
+## Features
+
+- 📅 **Lokaler Kalender** – Keine externe URL nötig
+- 🎨 **Community Card** – Direkt im Dashboard über Lovelace hinzufügbar
+- 🔄 **HACS-Integration** – Automatische Updates über HACS
+- 🏠 **Home Assistant native** – Vollständige Integration
+
+## Installation
+
+### via HACS
+
+1. Öffne **HACS** in Home Assistant
+2. Klicke **Explore & Download Repositories**
+3. Suche nach `shared-calendar`
+4. Klicke **Download**
+5. Starte Home Assistant neu
+
+### Manuelle Installation
+
+Kopiere `custom_components/shared_calendar` in dein Home Assistant `custom_components` Verzeichnis.
+
+```bash
+git clone https://github.com/Snaker-L/Home-Assistant_shared-calendar.git
+cp -r Home-Assistant_shared-calendar/custom_components/shared_calendar ~/.homeassistant/custom_components/
+cp -r Home-Assistant_shared-calendar/www/shared_calendar ~/.homeassistant/www/
+```
+
+Starte Home Assistant neu.
 
 ## Nutzung
 
-Der Kalender ist lokal und verwendet eingebaute Termine in Home Assistant.
+### 1. Integration einrichten
 
-### Community-Karte
+- Gehe zu **Einstellungen → Geräte & Dienste → Integrationen**
+- Klicke **+ Integration erstellen**
+- Suche nach `Shared Calendar`
+- Bestätige die Einrichtung
 
-Wenn du das Repository via HACS installierst, wird die Karte automatisch aus dem `www`-Verzeichnis bereitgestellt.
+### 2. Ressource hinzufügen
 
-- HACS-Ressource: `/hacsfiles/shared-calendar/shared-calendar-card.js`
+- Gehe zu **Einstellungen → Dashboards → Ressourcen**
+- Klicke **+ Ressource erstellen**
+- Bei HACS-Installation:
+  ```
+  /hacsfiles/Snaker-L/Home-Assistant_shared-calendar/www/shared_calendar/shared-calendar-card.js
+  ```
+- Bei manueller Installation:
+  ```
+  /local/shared_calendar/shared-calendar-card.js
+  ```
 - Typ: `module`
 
-Wenn du lokal installierst, kopiere die Datei aus `www/shared-calendar-card.js` in dein Home Assistant `www`-Verzeichnis und verwende dann `/local/shared-calendar-card.js` als Ressource.
+### 3. Karte zum Dashboard hinzufügen
 
-Danach kannst du die Karte direkt im Lovelace-Editor auswählen.
-
-### Beispielkarte
+- Öffne dein Dashboard im Edit-Modus
+- Klicke **+ Karte erstellen**
+- Wähle unter **Community Cards** → `Shared Calendar Card`
+- Konfiguriere die Karte:
 
 ```yaml
 type: custom:shared-calendar-card
@@ -29,4 +71,23 @@ days: 14
 max_events: 8
 ```
 
-Die Karte zeigt lokale Kalenderdaten ohne externe URL. Du brauchst keinen zusätzlichen YAML-Code im Dashboard-Editor, sobald die Ressource eingebunden ist.
+## Konfiguration
+
+| Option | Beschreibung | Standard |
+|--------|-------------|---------|
+| `calendar_entity` | Home Assistant Kalender Entity | erforderlich |
+| `title` | Titel der Karte | "Shared Calendar" |
+| `days` | Anzahl Tage anzeigen | 7 |
+| `max_events` | Max. Anzahl Events | 10 |
+
+## Versionshistorie
+
+- **1.0.0** (Testversion) – Erste Release mit Basis-Funktionalität
+
+## Support
+
+Fehler? → [GitHub Issues](https://github.com/Snaker-L/Home-Assistant_shared-calendar/issues)
+
+---
+
+*Made with ❤️ for Home Assistant*
