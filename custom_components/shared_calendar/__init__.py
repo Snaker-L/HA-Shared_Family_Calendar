@@ -6,7 +6,7 @@ from shutil import copy2
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.components.lovelace.const import CONF_RESOURCE_TYPE_WS, CONF_URL
-from homeassistant.const import CONF_ID, Platform
+from homeassistant.const import CONF_ID
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.event import async_call_later
 
@@ -106,14 +106,11 @@ async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
     if resource_collection is None:
         return
 
-    resource_url = await _get_resource_url(hass)
-    if resource_url is None:
-        return
-
+    resource_urls = [MANUAL_RESOURCE_URL, HACS_RESOURCE_URL]
     resources_to_remove = [
         item
         for item in resource_collection.async_items()
-        if item.get(CONF_URL) == resource_url and item.get("type") == "module"
+        if item.get(CONF_URL) in resource_urls and item.get("type") == "module"
     ]
 
     for resource in resources_to_remove:
