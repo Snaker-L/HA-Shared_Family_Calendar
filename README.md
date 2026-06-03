@@ -47,6 +47,7 @@ Starte Home Assistant neu.
 - Bei HACS-Installation wird die Lovelace-Ressource automatisch registriert.
 - Bei manueller Installation kopiere `www/shared_calendar` in dein Home Assistant-Ordner `www/shared_calendar` und starte Home Assistant neu.
 - Die Karte sollte danach automatisch im Kartenpicker verfügbar sein.
+- Beim Entfernen der Integration wird die automatisch erstellte Ressource wieder entfernt.
 
 ### 3. Karte zum Dashboard hinzufügen
 
