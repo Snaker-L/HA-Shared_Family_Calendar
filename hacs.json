@@ -6,5 +6,5 @@
   "render_readme": true,
   "categories": ["integration", "plugin"],
   "version": "1.0.1",
-  "icon": "calendar-icon.png"
+  "icon": "mdi:calendar"
 }
