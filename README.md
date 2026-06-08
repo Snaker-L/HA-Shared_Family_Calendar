@@ -1,90 +1,82 @@
-# Home-Assistant Shared Family Calendar
+# Shared Family Calendar
 
-> ⚠️ **Dies ist zurzeit noch eine Testversion und nicht vollständig funktionsfähig!**
+> ⚠️ **Aktuell befindet sich die Integration noch in Entwicklung.**
 
-Ein einfacher lokaler Kalender für Home Assistant als Custom Lovelace Card.
+Shared Family Calendar ist eine lokale Kalenderintegration für Home Assistant mit eigener Lovelace-Karte für Familien-, Team- oder Haushaltskalender.
 
 ## Features
 
-- 📅 **Lokaler Kalender** – Keine externe URL nötig
-- 🎨 **Community Card** – Direkt im Dashboard über Lovelace hinzufügbar
-- 🔄 **HACS-Integration** – Automatische Updates über HACS
-- 🏠 **Home Assistant native** – Vollständige Integration
+* 📅 Lokaler Kalender ohne externe ICS-URL
+* 👨‍👩‍👧‍👦 Gemeinsamer Familienkalender
+* 🎨 Eigene Lovelace Community Card
+* 🔄 HACS-Unterstützung
+* 🏠 Vollständig lokal in Home Assistant
+* ⚡ Automatische Registrierung der Lovelace-Ressource
 
 ## Installation
 
-### via HACS
+### Installation über HACS
 
-1. Öffne **HACS** in Home Assistant
-2. Klicke **Explore & Download Repositories**
-3. Suche nach `shared_family_calendar`
-4. Klicke **Download**
+1. Öffne **HACS**
+2. Klicke auf **Repositories**
+3. Suche nach **Shared Family Calendar**
+4. Installiere die Integration
 5. Starte Home Assistant neu
 
 ### Manuelle Installation
 
-Kopiere `custom_components/shared_family_calendar` in dein Home Assistant `custom_components` Verzeichnis.
+Kopiere den Ordner:
 
-```bash
-git clone https://github.com/Snaker-L/HA-shared_family_calendar.git
-cp -r Home-Assistant_shared-calendar/custom_components/shared_calendar ~/.homeassistant/custom_components/
+```text
+custom_components/shared_family_calendar
 ```
 
-Starte Home Assistant neu.
+in dein Home Assistant Verzeichnis:
 
-## Nutzung
+```text
+config/custom_components/shared_family_calendar
+```
 
-### 1. Integration einrichten
+Anschließend Home Assistant neu starten.
 
-- Gehe zu **Einstellungen → Geräte & Dienste → Integrationen**
-- Klicke **+ Integration erstellen**
-- Suche nach `Shared Calendar`
-- Bestätige die Einrichtung
+## Einrichtung
 
-### 2. Ressource hinzufügen
+### Integration hinzufügen
 
-- Bei HACS-Installation wird die Lovelace-Ressource automatisch registriert.
- - Bei HACS-Installation wird die Lovelace-Ressource automatisch registriert.
- - HACS speichert die Frontend-Dateien nicht unter `www/shared_calendar`, sondern unter `/hacsfiles/...`.
- - Bei manueller Installation kopiert die Integration die Karte automatisch nach `www/community/shared_calendar`, sobald sie eingerichtet wird.
- - Die Ressource wird bevorzugt über den HACS-Pfad `/hacsfiles/.../www/community/shared_calendar/shared-calendar-card.js` registriert (nicht `/local`).
- - Eine zusätzliche manuelle Ressourcenkonfiguration ist nicht nötig.
-- Die Karte sollte danach automatisch im Kartenpicker verfügbar sein.
-- Beim Entfernen der Integration wird die automatisch erstellte Ressource wieder entfernt.
+1. Einstellungen → Geräte & Dienste
+2. Integration hinzufügen
+3. Nach **Shared Family Calendar** suchen
+4. Einrichtung abschließen
 
-### 3. Karte zum Dashboard hinzufügen
+## Dashboard-Karte
 
-- Öffne dein Dashboard im Edit-Modus
-- Klicke **+ Karte erstellen**
-- Wähle unter **Community Cards** → `Shared Calendar Card`
-- Konfiguriere die Karte:
+Nach der Installation steht die Community-Karte automatisch zur Verfügung.
+
+Beispiel:
 
 ```yaml
-type: custom:shared-calendar-card
-calendar_entity: calendar.family_calendar
+type: custom:shared-family-calendar-card
 title: Familienkalender
-days: 14
-max_events: 8
+calendar_entity: calendar.shared_family_calendar
 ```
 
 ## Konfiguration
 
-| Option | Beschreibung | Standard |
-|--------|-------------|---------|
-| `calendar_entity` | Home Assistant Kalender Entity | erforderlich |
-| `title` | Titel der Karte | "Shared Calendar" |
-| `days` | Anzahl Tage anzeigen | 7 |
-| `max_events` | Max. Anzahl Events | 10 |
+| Option          | Beschreibung    |
+| --------------- | --------------- |
+| calendar_entity | Kalender-Entity |
+| title           | Titel der Karte |
 
-## Versionshistorie
+## Projektstatus
 
-- **1.0.1** – Pfade auf `www/community` angepasst; Ressourcenregistrierung via HACS/local optimiert
-- **1.0.0** (Testversion) – Erste Release mit Basis-Funktionalität
+Der Shared Family Calendar befindet sich aktuell noch in aktiver Entwicklung. Funktionen und Datenstruktur können sich bis zur ersten stabilen Version noch ändern.
 
 ## Support
 
-Fehler? → [GitHub Issues](https://github.com/Snaker-L/Home-Assistant_shared-calendar/issues)
+Fehler und Verbesserungsvorschläge:
+
+https://github.com/Snaker-L/HA-Shared_Family_Calendar/issues
 
 ---
 
-*Made with ❤️ for Home Assistant*
+Made with ❤️ for Home Assistant
