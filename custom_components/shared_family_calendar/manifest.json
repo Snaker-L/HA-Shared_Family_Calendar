@@ -1,5 +1,5 @@
 {
-  "domain": "shared family calendar",
+  "domain": "shared_family_calendar",
   "name": "Shared Family Calendar",
   "codeowners": ["@Snaker-L"],
   "config_flow": true,
