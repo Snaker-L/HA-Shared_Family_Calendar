@@ -1,11 +1,11 @@
 {
-  "domain": "shared_calendar",
-  "name": "Shared Calendar",
+  "domain": "shared family calendar",
+  "name": "Shared Family Calendar",
   "codeowners": ["@Snaker-L"],
   "config_flow": true,
-  "documentation": "https://github.com/Snaker-L/Home-Assistant_shared-calendar",
+  "documentation": "https://github.com/Snaker-L/HA-Shared_Family_Calendar",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/Snaker-L/Home-Assistant_shared-calendar/issues",
+  "issue_tracker": "https://github.com/Snaker-L/HA-Shared_Family_Calendar/issues",
   "requirements": [],
-  "version": "1.0.1"
+  "version": "1.0.2"
 }
