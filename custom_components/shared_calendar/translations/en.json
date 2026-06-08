@@ -3,7 +3,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Configure Shared Calendar",
+        "title": "Configure Shared Family Calendar",
         "description": "Enter the public ICS calendar URL for your shared calendar.",
         "data": {
           "name": "Calendar name",
