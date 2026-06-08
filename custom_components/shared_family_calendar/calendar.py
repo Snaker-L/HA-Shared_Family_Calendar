@@ -1,4 +1,4 @@
-"""Calendar entity for Shared Calendar integration."""
+"""Calendar entity for Shared Family Calendar integration."""
 
 from __future__ import annotations
 
@@ -12,31 +12,37 @@ from homeassistant.util import dt as dt_util
 
 from .const import DEFAULT_NAME
 
-PLATFORMS = ["calendar"]
-
 
 async def async_setup_entry(
-    hass: HomeAssistant, entry: Any, async_add_entities: Any
+    hass: HomeAssistant,
+    entry: Any,
+    async_add_entities: Any,
 ) -> None:
-    """Set up calendar platform for Shared Calendar."""
+    """Set up calendar platform."""
     calendar_name = entry.data.get(CONF_NAME, DEFAULT_NAME)
-    async_add_entities([SharedCalendar(calendar_name)])
+    async_add_entities([SharedFamilyCalendar(calendar_name)])
 
 
-class SharedCalendar(CalendarEntity):
-    """Shared Calendar entity."""
+class SharedFamilyCalendar(CalendarEntity):
+    """Shared Family Calendar entity."""
 
     def __init__(self, name: str) -> None:
-        """Initialize the calendar."""
+        """Initialize calendar."""
         self._attr_name = name
-        self._attr_unique_id = f"shared_calendar_{name.lower().replace(' ', '_')}"
+        self._attr_unique_id = (
+            f"shared_family_calendar_{name.lower().replace(' ', '_')}"
+        )
         self._events: list[CalendarEvent] = []
 
     async def async_get_events(
-        self, hass: HomeAssistant, start_date: datetime, end_date: datetime
+        self,
+        hass: HomeAssistant,
+        start_date: datetime,
+        end_date: datetime,
     ) -> list[CalendarEvent]:
-        """Return calendar events within the specified date range."""
+        """Return events in requested time range."""
         self._events = self._build_sample_events()
+
         return [
             event
             for event in self._events
@@ -44,21 +50,30 @@ class SharedCalendar(CalendarEntity):
         ]
 
     async def async_update(self) -> None:
-        """Update calendar events."""
+        """Update calendar."""
         self._events = self._build_sample_events()
+
+    @property
+    def event(self) -> CalendarEvent | None:
+        """Return next upcoming event."""
+        if not self._events:
+            self._events = self._build_sample_events()
+
+        return self._events[0] if self._events else None
 
     @staticmethod
     def _build_sample_events() -> list[CalendarEvent]:
         """Build sample calendar events."""
         now = dt_util.now()
+
         return [
             CalendarEvent(
                 start=now,
                 end=now + timedelta(hours=1),
                 summary="Familien-Meeting",
-                description="Lokaler Testtermin im Shared Calendar.",
+                description="Lokaler Testtermin im Shared Family Calendar.",
                 location="Zuhause",
-                uid="shared-calendar-1",
+                uid="shared-family-calendar-1",
             ),
             CalendarEvent(
                 start=now + timedelta(days=1, hours=2),
@@ -66,6 +81,6 @@ class SharedCalendar(CalendarEntity):
                 summary="Projektplanung",
                 description="Lokale Kalenderdaten.",
                 location="Büro",
-                uid="shared-calendar-2",
+                uid="shared-family-calendar-2",
             ),
         ]
