@@ -15,28 +15,28 @@ from .const import DOMAIN, PLATFORMS
 _LOGGER = logging.getLogger(__name__)
 
 HACS_RESOURCE_URL = (
-    "/hacsfiles/Home-Assistant_shared-calendar/www/community/shared_calendar/"
+    "/hacsfiles/Shared-Family-Calendar/www/community/shared_calendar/"
     "shared-calendar-card.js"
 )
 # Some HACS installations may include the owner in the path; include
 # a second variant for cleanup operations.
 HACS_RESOURCE_URL_OWNER = (
-    "/hacsfiles/Snaker-L/Home-Assistant_shared-calendar/www/community/shared_calendar/"
+    "/hacsfiles/Snaker-L/HA-Shared_Family_Calendar/www/community/shared_calendar/"
     "shared-calendar-card.js"
 )
 MANUAL_RESOURCE_URL = "/local/community/shared_calendar/shared-calendar-card.js"
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    """Set up the Shared Calendar integration."""
+    """Set up the Shared Family Calendar integration."""
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Shared Calendar from a config entry."""
+    """Set up Shared Family Calendar from a config entry."""
     hass.data.setdefault(DOMAIN, {})
     if entry.entry_id in hass.data[DOMAIN]:
-        _LOGGER.debug("Shared Calendar config entry %s is already set up", entry.entry_id)
+        _LOGGER.debug("Shared Family Calendar config entry %s is already set up", entry.entry_id)
         return True
     hass.data[DOMAIN][entry.entry_id] = entry.data
 
@@ -47,7 +47,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     try:
         await _ensure_local_resource(hass)
     except Exception:  # pragma: no cover - defensive
-        _LOGGER.debug("Unable to ensure local Shared Calendar resource during setup.")
+        _LOGGER.debug("Unable to ensure local Shared Family Calendar resource during setup.")
 
     if not await _async_register_lovelace_resource(hass):
         def _retry_registration(_: object) -> None:
@@ -60,7 +60,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 
 async def _async_register_lovelace_resource(hass: HomeAssistant) -> bool:
-    """Register the Shared Calendar Lovelace resource automatically."""
+    """Register the Shared Family Calendar Lovelace resource automatically."""
     lovelace_data = hass.data.get("lovelace")
     if not lovelace_data:
         _LOGGER.debug("Lovelace data is not available yet; skipping resource registration.")
@@ -68,7 +68,7 @@ async def _async_register_lovelace_resource(hass: HomeAssistant) -> bool:
     mode = lovelace_data.get("mode") if isinstance(lovelace_data, dict) else getattr(lovelace_data, "mode", None)
     if mode == "yaml":
         _LOGGER.warning(
-            "Lovelace is running in YAML mode; automatic Shared Calendar resource "
+            "Lovelace is running in YAML mode; automatic Shared Family Calendar resource "
             "registration is not supported."
         )
         return True
@@ -79,7 +79,7 @@ async def _async_register_lovelace_resource(hass: HomeAssistant) -> bool:
 
     resource_url = await _get_resource_url(hass)
     if resource_url is None:
-        _LOGGER.debug("Shared Calendar resource file not found; cannot register resource.")
+        _LOGGER.debug("Shared Family Calendar resource file not found; cannot register resource.")
         return True
 
     existing_resource = next(
@@ -92,14 +92,14 @@ async def _async_register_lovelace_resource(hass: HomeAssistant) -> bool:
     )
 
     if existing_resource is not None:
-        _LOGGER.debug("Shared Calendar Lovelace resource already registered: %s", resource_url)
+        _LOGGER.debug("Shared Family Calendar Lovelace resource already registered: %s", resource_url)
         return True
 
     try:
         await resource_collection.async_create_item(
             {CONF_RESOURCE_TYPE_WS: "module", CONF_URL: resource_url}
         )
-        _LOGGER.info("Registered Shared Calendar Lovelace resource: %s", resource_url)
+        _LOGGER.info("Registered Shared Family Calendar Lovelace resource: %s", resource_url)
         return True
     except Exception as err:
         _LOGGER.error("Failed to register Shared Calendar Lovelace resource: %s", err)
@@ -107,7 +107,7 @@ async def _async_register_lovelace_resource(hass: HomeAssistant) -> bool:
 
 
 async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
-    """Remove the Shared Calendar Lovelace resource when the integration is removed."""
+    """Remove the Shared Family Calendar Lovelace resource when the integration is removed."""
     lovelace_data = hass.data.get("lovelace")
     if not lovelace_data:
         return
@@ -133,13 +133,13 @@ async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
             continue
         try:
             await resource_collection.async_delete_item(resource_id)
-            _LOGGER.info("Removed Shared Calendar Lovelace resource: %s", resource_url)
+            _LOGGER.info("Removed Shared Family Calendar Lovelace resource: %s", resource_url)
         except Exception as err:
-            _LOGGER.error("Failed to remove Shared Calendar Lovelace resource: %s", err)
+            _LOGGER.error("Failed to remove Shared Family Calendar Lovelace resource: %s", err)
 
 
 async def _get_resource_url(hass: HomeAssistant) -> str | None:
-    """Return the correct resource URL for the Shared Calendar card.
+    """Return the correct resource URL for the Shared Family Calendar card.
 
     For manual installations: use `/local/community/shared_calendar/shared-calendar-card.js`.
     For HACS: use the HACS-served resource under `/hacsfiles/...`.
@@ -154,7 +154,7 @@ async def _get_resource_url(hass: HomeAssistant) -> str | None:
 
 
 async def _ensure_local_resource(hass: HomeAssistant) -> bool:
-    """Ensure the Shared Calendar card file exists under config/www/community/shared_calendar."""
+    """Ensure the Shared Family Calendar card file exists under config/www/community/shared_calendar."""
     target_dir = Path(hass.config.path("www", "community", "shared_calendar"))
     target_file = target_dir / "shared-calendar-card.js"
 
