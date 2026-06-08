@@ -1,4 +1,4 @@
-"""The Shared Calendar integration."""
+"""The Shared Family Calendar integration."""
 
 import logging
 from pathlib import Path
