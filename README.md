@@ -17,16 +17,16 @@ Ein einfacher lokaler Kalender für Home Assistant als Custom Lovelace Card.
 
 1. Öffne **HACS** in Home Assistant
 2. Klicke **Explore & Download Repositories**
-3. Suche nach `shared-calendar`
+3. Suche nach `shared_family_calendar`
 4. Klicke **Download**
 5. Starte Home Assistant neu
 
 ### Manuelle Installation
 
-Kopiere `custom_components/shared_calendar` in dein Home Assistant `custom_components` Verzeichnis.
+Kopiere `custom_components/shared_family_calendar` in dein Home Assistant `custom_components` Verzeichnis.
 
 ```bash
-git clone https://github.com/Snaker-L/Home-Assistant_shared-calendar.git
+git clone https://github.com/Snaker-L/HA-shared_family_calendar.git
 cp -r Home-Assistant_shared-calendar/custom_components/shared_calendar ~/.homeassistant/custom_components/
 ```
 
