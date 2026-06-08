@@ -1,4 +1,4 @@
-# Home-Assistant Shared Calendar
+# Home-Assistant Shared Family Calendar
 
 > ⚠️ **Dies ist zurzeit noch eine Testversion und nicht vollständig funktionsfähig!**
 
