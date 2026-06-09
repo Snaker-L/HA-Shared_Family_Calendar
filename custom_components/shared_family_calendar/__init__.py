@@ -15,16 +15,16 @@ from .const import DOMAIN, PLATFORMS
 _LOGGER = logging.getLogger(__name__)
 
 HACS_RESOURCE_URL = (
-    "/hacsfiles/Shared-Family-Calendar/www/community/shared_calendar/"
+    "/hacsfiles/Shared-Family-Calendar/www/community/shared_family_calendar/"
     "shared-calendar-card.js"
 )
 # Some HACS installations may include the owner in the path; include
 # a second variant for cleanup operations.
 HACS_RESOURCE_URL_OWNER = (
-    "/hacsfiles/Snaker-L/HA-Shared_Family_Calendar/www/community/shared_calendar/"
-    "shared-calendar-card.js"
+    "/hacsfiles/Snaker-L/HA-Shared_Family_Calendar/www/community/shared_family_calendar/"
+    "shared-family-calendar-card.js"
 )
-MANUAL_RESOURCE_URL = "/local/community/shared_calendar/shared-calendar-card.js"
+MANUAL_RESOURCE_URL = "/local/community/shared_family_calendar/shared-family-calendar-card.js"
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
@@ -43,7 +43,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     # Ensure the local resource is present for manual installations
-    # (creates config/www/community/shared_calendar/shared-calendar-card.js).
+    # (creates config/www/community/shared_family_calendar/shared-calendar-card.js).
     try:
         await _ensure_local_resource(hass)
     except Exception:  # pragma: no cover - defensive
@@ -141,11 +141,11 @@ async def _async_remove_lovelace_resource(hass: HomeAssistant) -> None:
 async def _get_resource_url(hass: HomeAssistant) -> str | None:
     """Return the correct resource URL for the Shared Family Calendar card.
 
-    For manual installations: use `/local/community/shared_calendar/shared-calendar-card.js`.
+    For manual installations: use `/local/community/shared_family_calendar/shared-family-calendar-card.js`.
     For HACS: use the HACS-served resource under `/hacsfiles/...`.
     """
     # Check if local resource exists first (manual or fallback installation)
-    target_file = Path(hass.config.path("www", "community", "shared_calendar", "shared-calendar-card.js"))
+    target_file = Path(hass.config.path("www", "community", "shared_family_calendar", "shared-family-calendar-card.js"))
     if target_file.exists():
         return MANUAL_RESOURCE_URL
     
@@ -154,8 +154,8 @@ async def _get_resource_url(hass: HomeAssistant) -> str | None:
 
 
 async def _ensure_local_resource(hass: HomeAssistant) -> bool:
-    """Ensure the Shared Family Calendar card file exists under config/www/community/shared_calendar."""
-    target_dir = Path(hass.config.path("www", "community", "shared_calendar"))
+    """Ensure the Shared Family Calendar card file exists under config/www/community/shared_family_calendar."""
+    target_dir = Path(hass.config.path("www", "community", "shared_family_calendar"))
     target_file = target_dir / "shared-calendar-card.js"
 
     if target_file.exists():
