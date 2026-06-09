@@ -1,7 +1,7 @@
 {
   "name": "Shared Family Calendar",
   "homeassistant": "2025.12.0",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "hide_default_branch": true,
   "content_in_root": false,
   "domains": ["shared_family_calendar"],
