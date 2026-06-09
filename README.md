@@ -2,7 +2,7 @@
 
 > ⚠️ **Aktuell befindet sich die Integration noch in Entwicklung.**
 
-Shared Family Calendar ist eine lokale Kalenderintegration für Home Assistant mit eigener Lovelace-Karte für Familien-, Team- oder Haushaltskalender. :)
+Shared Family Calendar ist eine lokale Kalenderintegration für Home Assistant mit eigener Lovelace-Karte für Familien-, Team- oder Haushaltskalender.
 
 ## Features
 
