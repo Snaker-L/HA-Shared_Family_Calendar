@@ -43,7 +43,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     # Ensure the local resource is present for manual installations
-    # (creates config/www/community/shared_family_calendar/shared-calendar-card.js).
+    # (creates config/www/community/shared_family_calendar/shared-family-calendar-card.js).
     try:
         await _ensure_local_resource(hass)
     except Exception:  # pragma: no cover - defensive
